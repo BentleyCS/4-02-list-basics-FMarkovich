@@ -9,15 +9,20 @@ def bookends(li: list):
     :param list:
     :return:
     """
-
-
-
+    first=li[0]
+    last=li[-1]
+    li[:]=li[1:-1]
+    return [first,last]
 def inOrder(li : list):
     """
     Given a list of numbers return true if the list is in ascending order.
     :param list:
     :return:
     """
+    for i in range (len(li)-1):
+        if li[i]>li[i+1]:
+            return False
+    return True
 
 
 
@@ -28,7 +33,7 @@ def find(li: list, target : int):
     If the target value is not in the list return -1
     If multiple of the target value exist within the list you may return either
     index.
-    You are not alowed to use the built-in index method from python.
+    You are not allowed to use the built-in index method from python.
     Example list [1,3,5,7,9] target = 3 returned value would be 1 because 3 can be
     found at the first index.
     Example list [3, 7, 8, 1, 0, 1, 12] target = 1 a return of either 3 or 5 would
@@ -38,7 +43,10 @@ def find(li: list, target : int):
     :param target:
     :return:
     """
-
+    for i in range(len(li)):
+         if li[i] == target:
+            return i
+    return -1
 
 def removeLowest(li):
     """
@@ -48,8 +56,13 @@ def removeLowest(li):
     :param list:
     :return:
     """
-
-
+    lowest=li[0]
+    for i in li[1:]:
+        if i<lowest:
+            lowest=i
+    remove=li.index(lowest)
+    del li[remove]
+    return li
 def keepOrder(li: list, value):
     """
     Given a list of numbers that is in order and a value. Place the value into the
@@ -59,7 +72,13 @@ def keepOrder(li: list, value):
     :param value:
     :return:
     """
-
+    for i in range (len(li)-1):
+        if li[i]>=value:
+            li.insert(i,value)
+            return li
+        elif li[len(li)-1]<value:
+            li.append(value)
+    return li
 
 def merge(l1:list, l2:list):
     """
@@ -70,4 +89,17 @@ def merge(l1:list, l2:list):
     :param l2:
     :return:
     """
-    
+    merged = []  # new list to hold results
+    x, y = 0, 0  # pointers for l1 and l2
+
+    # Merge while both lists have elements left
+    while x < len(l1) and y < len(l2):
+        if l1[x] <= l2[y]:
+            merged.append(l1[x])
+            x = x+1
+        else:
+            merged.append(l2[y])
+            y=y+1
+    merged.extend(l1[x:])
+    merged.extend(l2[y:])
+    return merged
